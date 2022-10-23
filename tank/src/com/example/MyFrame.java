@@ -11,6 +11,13 @@ public class MyFrame extends Frame {
     int x = 100;
     int y = 100;
 
+    // 定义初始坦克位置方向
+    Dir dir  = Dir.DOWN ;
+
+    // 速度定义
+    final  int SPEED  = 10;
+
+
     public MyFrame() {
         setTitle("test");
         setSize(1024, 768);
@@ -31,8 +38,6 @@ public class MyFrame extends Frame {
                 System.exit(0);
             }
         });
-
-
     }
 
     /**
@@ -41,6 +46,23 @@ public class MyFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         g.fillRect(x, y, 50, 50);
+
+        switch (dir) {
+            case LEFT:
+               x -= SPEED;
+                break;
+            case RIGHT:
+                x += SPEED;
+                break;
+            case UP:
+                y -= SPEED;
+                break;
+            case DOWN:
+                y += SPEED;
+                break;
+            default:
+                break;
+        }
     }
 
 
@@ -61,25 +83,22 @@ public class MyFrame extends Frame {
             int key = e.getKeyCode();
             switch (key) {
                 case KeyEvent.VK_UP:
-                    y -= 10;
                     tflag = true;
                     break;
                 case KeyEvent.VK_DOWN:
-                    y += 10;
                     dflag = true;
                     break;
                 case KeyEvent.VK_LEFT:
-                    x -= 10;
                     lflag = true;
                     break;
                 case KeyEvent.VK_RIGHT:
-                    x += 10;
                     rflag = true;
                     break;
                 default:
                     break;
             }
 
+            setDirTankMain();
         }
 
         /**
@@ -90,26 +109,30 @@ public class MyFrame extends Frame {
             int key = e.getKeyCode();
             switch (key) {
                 case KeyEvent.VK_UP:
-                    y -= 10;
                     tflag = false;
                     break;
                 case KeyEvent.VK_DOWN:
-                    y += 10;
                     dflag = false;
                     break;
                 case KeyEvent.VK_LEFT:
-                    x -= 10;
                     lflag = false;
                     break;
                 case KeyEvent.VK_RIGHT:
-                    x += 10;
                     rflag = false;
                     break;
                 default:
                     break;
             }
+
+            setDirTankMain();
+        }
+
+
+        private void setDirTankMain() {
+            if(tflag) {dir = Dir.UP;}
+            if(dflag) {dir = Dir.DOWN;}
+            if(lflag) {dir = Dir.LEFT;}
+            if(rflag) {dir =Dir.RIGHT;}
         }
     }
-
-
 }
